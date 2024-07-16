@@ -70,6 +70,8 @@ dependencies {
     //retrofit
     implementation(libs.converter.gson)
     implementation(libs.retrofit)
+    implementation(libs.androidx.material.icons.core)
+    implementation(libs.androidx.material.icons.extended)
 
 
     testImplementation(libs.junit)

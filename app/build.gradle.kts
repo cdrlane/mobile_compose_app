@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.mobile_compose_app"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -45,7 +45,9 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+
         }
+
     }
 }
 
@@ -72,6 +74,8 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.androidx.material.icons.core)
     implementation(libs.androidx.material.icons.extended)
+    implementation(libs.ycharts)
+
 
 
     testImplementation(libs.junit)

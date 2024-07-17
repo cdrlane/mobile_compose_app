@@ -12,6 +12,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.MonetizationOn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -28,6 +31,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mobile_compose_app.R
+import com.example.mobile_compose_app.ui.theme.LightCarmin
+import com.example.mobile_compose_app.ui.theme.LightOlive
 import com.example.mobile_compose_app.ui.theme.clc_clay
 import com.example.mobile_compose_app.ui.theme.clc_navy
 import com.example.mobile_compose_app.ui.theme.clc_stone
@@ -75,7 +80,7 @@ fun AssetPerformanceCard(
             .wrapContentHeight()
             .fillMaxWidth()
             .padding(start = 5.dp, end = 5.dp, bottom = 5.dp),
-        colors = CardDefaults.cardColors(containerColor = clc_stone)
+        colors = CardDefaults.cardColors()
     ) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -88,7 +93,10 @@ fun AssetPerformanceCard(
 
             TickerName(assetInfo.name, assetInfo.tickerName)
 
-            PerformanceChart(Modifier.height(40.dp).width(90.dp), assetInfo.lastDayChange)
+            PerformanceChart(
+                Modifier
+                    .height(40.dp)
+                    .width(90.dp), assetInfo.lastDayChange)
 
             ValueView(assetInfo.currentValue, assetInfo.total)
         }
@@ -113,7 +121,11 @@ fun ValueView(currentValue: Float, total: Float) {
             style = MaterialTheme.typography.labelSmall,
             color = Color.Gray
         )
+        Icon(modifier=Modifier
+            .size(20.dp),
+            imageVector = Icons.Outlined.MonetizationOn, contentDescription ="Transact" )
     }
+
 }
 
 @Composable
@@ -126,7 +138,7 @@ fun PerformanceChart(modifier: Modifier = Modifier, list: List<Float> = listOf(1
         val min = list.min()
 
         val lineColor =
-            if (list.last() > list.first()) clc_navy else clc_clay
+            if (list.last() > list.first())  LightOlive else LightCarmin
 
         for (pair in zipList) {
 
@@ -173,7 +185,11 @@ private fun TickerName(name: String = "Apple Inc.", tickerName: String = "AAPL")
             maxLines = 2
         )
         Text(text = tickerName, style = MaterialTheme.typography.labelSmall, color = Color.Gray)
+        Icon(modifier=Modifier
+            .size(20.dp),
+            imageVector = Icons.Outlined.Info, contentDescription ="More info" )
     }
+
 }
 
 @Composable
@@ -192,7 +208,7 @@ private fun AssetIcon(iconDrawable: Int = R.drawable.markets) {
             contentDescription = "Asset Icon",
             tint = Color.Black,
             modifier = Modifier
-                .size(25.dp)
+                .size(35.dp)
                 .padding(bottom = 3.dp)
         )
     }

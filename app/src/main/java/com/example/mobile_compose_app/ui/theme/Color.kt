@@ -11,9 +11,11 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 val clc_navy = Color(0xFF293245)
-val clc_stone = Color(0xFF824D3A)
-val clc_clay = Color(0xFFB8AE82)
+val clc_stone = Color(0xFFB8AE82)
+val clc_clay = Color(0xFF824D3A)
 val clc_grey = Color(0xFF7F7F7F)
 val clc_dark_grey = Color(0xFF3A3A44)
 
 val white=Color(0xFFFFFFFF)
+val LightOlive = Color(0xFFacc8b2)
+val LightCarmin = Color(0xFFe7978b)

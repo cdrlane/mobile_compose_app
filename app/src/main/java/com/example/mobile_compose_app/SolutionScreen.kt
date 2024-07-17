@@ -36,7 +36,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.mobile_compose_app.composables.AssetPerformanceCard
-import com.example.mobile_compose_app.composables.instrumentsHeader
+import com.example.mobile_compose_app.composables.InstrumentsHeader
+
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -119,24 +120,29 @@ fun SolutionScreen(paddingValues: PaddingValues) {
                     }
                 )
             }
-
         }
         HorizontalPager(
             state = pagerState,
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f)
-        ) { index ->
-            OffshoreSolutions()
+                .weight(1f),
+
+        ) {page ->
+            when(page){
+                0 -> {LocalSolutions()}
+                1 -> {OffshoreSolutions()}
+                2 -> {PrivateEquitySolutions()}
+            }
+
+
         }
     }
 }
-
-private val demoAssetList: List<com.example.mobile_compose_app.AssetInfo> = listOf(
-    com.example.mobile_compose_app.AssetInfo(
-        R.drawable.baseline_dashboard_24,
-        "Apple Inc.",
-        "AAPL",
+private val offshoreTraditionalList: List<AssetInfo> = listOf(
+    AssetInfo(
+        R.drawable.small_logo,
+        "GAAF",
+        "Global Equity",
         listOf(
             182.789f,
             183.235f,
@@ -157,10 +163,10 @@ private val demoAssetList: List<com.example.mobile_compose_app.AssetInfo> = list
         187.00023f,
         1870.3f
     ),
-    com.example.mobile_compose_app.AssetInfo(
-        R.drawable.baseline_apps_24,
-        "Advanced Micro Devices, Inc.",
-        "AMD",
+    AssetInfo(
+        R.drawable.small_logo,
+        "GAAF",
+        "Global Fixed Income",
         listOf(
             113.518f,
             112.799f,
@@ -180,10 +186,10 @@ private val demoAssetList: List<com.example.mobile_compose_app.AssetInfo> = list
         113.02211f,
         1356.26f
     ),
-    com.example.mobile_compose_app.AssetInfo(
+    AssetInfo(
         R.drawable.small_logo,
-        "Mongodb Inc.",
-        "MDB",
+        "EVERGREEN",
+        "Global Equity",
         listOf(
             403.972f,
             401.536f,
@@ -202,17 +208,377 @@ private val demoAssetList: List<com.example.mobile_compose_app.AssetInfo> = list
         ),
         403.00125f,
         3627.011f
+    ),
+    AssetInfo(
+        R.drawable.small_logo,
+        "EVERGREEN",
+        "Global Fixed Income",
+        listOf(
+            113.518f,
+            112.799f,
+            111.333f,
+            110.235f,
+            111.099f,
+            112.506f,
+            109.985f,
+            108.212f,
+            109.125f,
+            107.531f,
+            106.228f,
+            105.284f,
+            106.031f,
+            109.493f
+        ),
+        113.02211f,
+        1356.26f
     )
+)
+private val offshoreHedgeFundList: List<AssetInfo> = listOf(
+    AssetInfo(
+        R.drawable.small_logo,
+        "GAAF",
+        "Correlated Alpha",
+        listOf(
+            182.789f,
+            183.235f,
+            184.673f,
+            183.091f,
+            184.987f,
+            185.379f,
+            186.492f,
+            187.091f,
+            185.785f,
+            188.284f,
+            189.982f,
+            190.673f,
+            191.579f,
+            189.284f,
+            192.975f
+        ),
+        187.00023f,
+        1870.3f
+    ),
+    AssetInfo(
+        R.drawable.small_logo,
+        "GAAF",
+        "Uncorrelated Alpha",
+        listOf(
+            113.518f,
+            112.799f,
+            111.333f,
+            110.235f,
+            111.099f,
+            112.506f,
+            109.985f,
+            108.212f,
+            109.125f,
+            107.531f,
+            106.228f,
+            105.284f,
+            106.031f,
+            109.493f
+        ),
+        113.02211f,
+        1356.26f
+    ),
+    AssetInfo(
+        R.drawable.small_logo,
+        "EVERGREEN",
+        "Absolute",
+        listOf(
+            403.972f,
+            401.536f,
+            402.241f,
+            405.175f,
+            402.647f,
+            401.829f,
+            399.839f,
+            398.287f,
+            399.671f,
+            401.405f,
+            397.381f,
+            396.093f,
+            395.174f,
+            392.567f
+        ),
+        403.00125f,
+        3627.011f
+    ),
+    AssetInfo(
+        R.drawable.small_logo,
+        "EVERGREEN",
+        "Partners",
+        listOf(
+            113.518f,
+            112.799f,
+            111.333f,
+            110.235f,
+            111.099f,
+            112.506f,
+            109.985f,
+            108.212f,
+            109.125f,
+            107.531f,
+            106.228f,
+            105.284f,
+            106.031f,
+            109.493f
+        ),
+        113.02211f,
+        1356.26f
+    )
+)
+
+private val offshoreHedgeSolutionList: List<AssetInfo> = listOf(
+    AssetInfo(
+        R.drawable.small_logo,
+        "ASPEN",
+        "Global",
+        listOf(
+            182.789f,
+            183.235f,
+            184.673f,
+            183.091f,
+            184.987f,
+            185.379f,
+            186.492f,
+            187.091f,
+            185.785f,
+            188.284f,
+            189.982f,
+            190.673f,
+            191.579f,
+            189.284f,
+            192.975f
+        ),
+        187.00023f,
+        1870.3f
+    ),
+    AssetInfo(
+        R.drawable.small_logo,
+        "ASPEN",
+        "Select",
+        listOf(
+            113.518f,
+            112.799f,
+            111.333f,
+            110.235f,
+            111.099f,
+            112.506f,
+            109.985f,
+            108.212f,
+            109.125f,
+            107.531f,
+            106.228f,
+            105.284f,
+            106.031f,
+            109.493f
+        ),
+        113.02211f,
+        1356.26f
+    ),
+    AssetInfo(
+        R.drawable.small_logo,
+        "GAAF",
+        "C1",
+        listOf(
+            403.972f,
+            401.536f,
+            402.241f,
+            405.175f,
+            402.647f,
+            401.829f,
+            399.839f,
+            398.287f,
+            399.671f,
+            401.405f,
+            397.381f,
+            396.093f,
+            395.174f,
+            392.567f
+        ),
+        403.00125f,
+        3627.011f
+    ),
+    AssetInfo(
+        R.drawable.small_logo,
+        "ASPEN",
+        "C2",
+        listOf(
+            113.518f,
+            112.799f,
+            111.333f,
+            110.235f,
+            111.099f,
+            112.506f,
+            109.985f,
+            108.212f,
+            109.125f,
+            107.531f,
+            106.228f,
+            105.284f,
+            106.031f,
+            109.493f
+        ),
+        113.02211f,
+        1356.26f
+    )
+)
+
+private val PrivateEquityList: List<AssetInfo> = listOf(
+    AssetInfo(
+        R.drawable.small_logo,
+        "LEADWOOD",
+        "Hillview Partners",
+        listOf(
+            182.789f,
+            183.235f,
+            184.673f,
+            183.091f,
+            184.987f,
+            185.379f,
+            186.492f,
+            187.091f,
+            185.785f,
+            188.284f,
+            189.982f,
+            190.673f,
+            191.579f,
+            189.284f,
+            192.975f
+        ),
+        187.00023f,
+        1870.3f
+    ),
+    AssetInfo(
+        R.drawable.small_logo,
+        "LEADWOOD",
+        "Asia Partners",
+        listOf(
+            113.518f,
+            112.799f,
+            111.333f,
+            110.235f,
+            111.099f,
+            112.506f,
+            109.985f,
+            108.212f,
+            109.125f,
+            107.531f,
+            106.228f,
+            105.284f,
+            106.031f,
+            109.493f
+        ),
+        113.02211f,
+        1356.26f
+    ),
+
+    )
+
+private val localFundsList: List<AssetInfo> = listOf(
+    AssetInfo(
+        R.drawable.corion_logo,
+        "CORION",
+        "Worldwide Flexible",
+        listOf(
+            182.789f,
+            183.235f,
+            184.673f,
+            183.091f,
+            184.987f,
+            185.379f,
+            186.492f,
+            187.091f,
+            185.785f,
+            188.284f,
+            189.982f,
+            190.673f,
+            191.579f,
+            189.284f,
+            192.975f
+        ),
+        187.00023f,
+        1870.3f
+    ),
+    AssetInfo(
+        R.drawable.corion_logo,
+        "CORION",
+        "Global Balanced",
+        listOf(
+            113.518f,
+            112.799f,
+            111.333f,
+            110.235f,
+            111.099f,
+            112.506f,
+            109.985f,
+            108.212f,
+            109.125f,
+            107.531f,
+            106.228f,
+            105.284f,
+            106.031f,
+            109.493f
+        ),
+        113.02211f,
+        1356.26f
+    ),
+
 )
 
 @Composable
 fun OffshoreSolutions(){
     Column {
-        instrumentsHeader("Funds")
+        LazyColumn(modifier = Modifier.padding(start = 10.dp, end = 10.dp), content = {
+
+            //workaround to call composable function from within another
+            items(count=1){_->InstrumentsHeader("Traditional")}
+
+
+
+            items(offshoreTraditionalList.size) { index ->
+                AssetPerformanceCard(assetInfo = offshoreTraditionalList[index])
+            }
+
+            items(count=1){_->InstrumentsHeader("Hedge Solutions")}
+
+
+            items(offshoreHedgeSolutionList.size) { index ->
+                AssetPerformanceCard(assetInfo = offshoreHedgeSolutionList[index])
+            }
+
+            items(count=1){_->InstrumentsHeader("Hedge Funds")}
+
+
+            items(offshoreHedgeFundList.size) { index ->
+                AssetPerformanceCard(assetInfo = offshoreHedgeFundList[index])
+            }
+        })
+    }
+}
+
+@Composable
+fun LocalSolutions(){
+    Column {
+        InstrumentsHeader("Funds")
 
         LazyColumn(modifier = Modifier.padding(start = 10.dp, end = 10.dp), content = {
-            items(demoAssetList.size) { index ->
-                AssetPerformanceCard(assetInfo = demoAssetList[index])
+            items(localFundsList.size) { index ->
+                AssetPerformanceCard(assetInfo = localFundsList[index])
+            }
+        })
+    }
+}
+
+@Composable
+fun PrivateEquitySolutions(){
+    Column {
+        InstrumentsHeader("Funds")
+
+        LazyColumn(modifier = Modifier.padding(start = 10.dp, end = 10.dp), content = {
+            items(PrivateEquityList.size) { index ->
+                AssetPerformanceCard(assetInfo = PrivateEquityList[index])
             }
         })
     }

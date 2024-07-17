@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Compress
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -21,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun instrumentsHeader(instrumentType:String) {
+fun InstrumentsHeader(instrumentType:String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -33,7 +34,7 @@ fun instrumentsHeader(instrumentType:String) {
         Text(text = instrumentType, color = Color.Gray, fontWeight = FontWeight.Bold)
 
         Icon(
-            imageVector = Icons.Filled.Compress,
+            imageVector = Icons.Filled.Info,
             contentDescription = "Instrument Icon",
             tint = Color.Black,
             modifier = Modifier

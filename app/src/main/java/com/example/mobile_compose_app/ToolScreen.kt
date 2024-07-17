@@ -38,7 +38,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.mobile_compose_app.composables.instrumentsHeader
+
 import com.example.mobile_compose_app.ui.theme.clc_stone
 
 

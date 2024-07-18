@@ -15,6 +15,13 @@ materialIconsCore = "1.7.0-beta05"
 materialIconsExtended = "1.7.0-beta05"
 kandyLetsPlot = "0.6.0-dev-48"
 ycharts = "2.1.0"
+cameraCore = "1.4.0-beta02"
+cameraCamera2 = "1.4.0-beta02"
+cameraLifecycle = "1.4.0-beta02"
+cameraVideo = "1.4.0-beta02"
+cameraView = "1.4.0-beta02"
+cameraExtensions = "1.4.0-beta02"
+textRecognition = "16.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -36,8 +43,14 @@ converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", ve
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 androidx-material-icons-core = { group = "androidx.compose.material", name = "material-icons-core", version.ref = "materialIconsCore" }
 androidx-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "materialIconsExtended" }
-kandy-lets-plot = { group = "org.jetbrains.kotlinx", name = "kandy-lets-plot", version.ref = "kandyLetsPlot" }
 ycharts = { group = "co.yml", name = "ycharts", version.ref = "ycharts" }
+camera-core = { group = "androidx.camera", name = "camera-core", version.ref = "cameraCore" }
+camera-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "cameraCamera2" }
+camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "cameraLifecycle" }
+camera-video = { group = "androidx.camera", name = "camera-video", version.ref = "cameraVideo" }
+camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraView" }
+camera-extensions = { group = "androidx.camera", name = "camera-extensions", version.ref = "cameraExtensions" }
+text-recognition = { group = "com.google.mlkit", name = "text-recognition", version.ref = "textRecognition" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -1,6 +1,11 @@
 package com.example.mobile_compose_app.composables
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.LocalIndication
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.indication
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,18 +22,31 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.MonetizationOn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.modifier.modifierLocalProvider
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.example.mobile_compose_app.R
 import com.example.mobile_compose_app.ui.theme.LightCarmin
@@ -37,46 +55,39 @@ import com.example.mobile_compose_app.ui.theme.clc_clay
 import com.example.mobile_compose_app.ui.theme.clc_navy
 import com.example.mobile_compose_app.ui.theme.clc_stone
 
-data class AssetInfo(
-    val iconDrawable: Int,
-    val name: String,
-    val tickerName: String,
-    val lastDayChange: List<Float>,
-    val currentValue: Float,
-    val total: Float,
-)
 
-private val mockAssetInfo = AssetInfo(
-    R.drawable.small_logo,
-    "Advanced Micro Devices, Inc.",
-    "AMD",
-    listOf(
-        113.518f,
-        113.799f,
-        113.333f,
-        113.235f,
-        114.099f,
-        113.506f,
-        113.985f,
-        114.212f,
-        114.125f,
-        113.531f,
-        114.228f,
-        113.284f,
-        114.031f,
-        113.493f,
-        113.112f
-    ),
-    113.02211f,
-    1356.26f
+data class DropDownItem(
+    val text:String
 )
 
 @Composable
-fun AssetPerformanceCard(
-    assetInfo: com.example.mobile_compose_app.AssetInfo
+fun InstrumentPerformanceCard(
+    assetInfo: com.example.mobile_compose_app.AssetInfo,
+    dropdownItems: List<DropDownItem>,
+    modifier: Modifier = Modifier,
+    onItemClick: (DropDownItem) -> Unit
 ) {
+    var isContextMenuVisible by rememberSaveable {
+        mutableStateOf(false)
+    }
+    var pressOffset by remember {
+        mutableStateOf(DpOffset.Zero)
+    }
+    var itemHeight by remember {
+        mutableStateOf(0.dp)
+    }
+    val interactionSource = remember {
+        MutableInteractionSource()
+    }
+    val density = LocalDensity.current
+
+
     Card(
-        modifier = Modifier
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        modifier = modifier
+            .onSizeChanged {
+                itemHeight = with(density) { it.height.toDp() }
+            }
             .wrapContentHeight()
             .fillMaxWidth()
             .padding(start = 5.dp, end = 5.dp, bottom = 5.dp),
@@ -86,8 +97,25 @@ fun AssetPerformanceCard(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .padding(15.dp)
+
                 .fillMaxWidth()
+                .indication(interactionSource, LocalIndication.current)
+                .pointerInput(true) {
+                    detectTapGestures(
+                        onLongPress = {
+                            isContextMenuVisible = true
+                            pressOffset = DpOffset(it.x.toDp(), it.y.toDp())
+                        },
+                        onPress = {
+                            val press = PressInteraction.Press(it)
+                            interactionSource.emit(press)
+                            tryAwaitRelease()
+                            interactionSource.emit(PressInteraction.Release(press))
+                        }
+                    )
+                }
+                .padding(16.dp)
+
         ) {
             AssetIcon(assetInfo.iconDrawable)
 
@@ -96,15 +124,38 @@ fun AssetPerformanceCard(
             PerformanceChart(
                 Modifier
                     .height(40.dp)
-                    .width(90.dp), assetInfo.lastDayChange)
+                    .width(60.dp), assetInfo.lastDayChange
+            )
 
-            ValueView(assetInfo.currentValue, assetInfo.total)
+            ValueView(assetInfo.currentValue, assetInfo.total,assetInfo.riskValue)
         }
+        DropdownMenu(
+            expanded = isContextMenuVisible,
+            onDismissRequest = {
+                isContextMenuVisible = false
+            },
+            offset = pressOffset.copy(
+                y = pressOffset.y - itemHeight
+            )
+        ) {
+            dropdownItems.forEach {
+                DropdownMenuItem(
+                                    text = {  Text(text = it.text) },
+                                    onClick = { onItemClick(it)
+                                                isContextMenuVisible=false
+                })
+              
+            }
+        }
+
+
+
     }
 }
 
+
 @Composable
-fun ValueView(currentValue: Float, total: Float) {
+fun ValueView(currentValue: Float, total: Float,riskValue:Int) {
     Column(
         modifier = Modifier
             .padding(start = 10.dp),
@@ -117,13 +168,16 @@ fun ValueView(currentValue: Float, total: Float) {
             color = Color.Black
         )
         Text(
-            text = "$${total.toInt()}",
+            text = "YTD: ${total}%",
             style = MaterialTheme.typography.labelSmall,
             color = Color.Gray
         )
-        Icon(modifier=Modifier
-            .size(20.dp),
-            imageVector = Icons.Outlined.MonetizationOn, contentDescription ="Transact" )
+        Text(
+            text = "Risk: $riskValue",
+            style = MaterialTheme.typography.labelMedium,
+            fontWeight = FontWeight.Bold,
+            color = Color.Black
+        )
     }
 
 }
@@ -170,7 +224,7 @@ private fun getValuePercentageForRange(value: Float, max: Float, min: Float) =
 
 @Composable
 //@Preview
-private fun TickerName(name: String = "Apple Inc.", tickerName: String = "AAPL") {
+private fun TickerName(name: String = "Apple Inc.", tickerName: String = "AAPL",aum:Double=100.0) {
     Column(
         modifier = Modifier
             .padding(start = 10.dp, end = 5.dp)
@@ -185,9 +239,7 @@ private fun TickerName(name: String = "Apple Inc.", tickerName: String = "AAPL")
             maxLines = 2
         )
         Text(text = tickerName, style = MaterialTheme.typography.labelSmall, color = Color.Gray)
-        Icon(modifier=Modifier
-            .size(20.dp),
-            imageVector = Icons.Outlined.Info, contentDescription ="More info" )
+        Text(text = "AUM:$$aum", style = MaterialTheme.typography.labelSmall, color = Color.Gray)
     }
 
 }

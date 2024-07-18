@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.FolderOpen
 import androidx.compose.material.icons.filled.ManageAccounts
 import androidx.compose.material.icons.filled.RunCircle
 import androidx.compose.material.icons.filled.Storm
+import androidx.compose.material.icons.filled.VideoCameraBack
 import androidx.compose.material.icons.outlined.ArrowDownward
 import androidx.compose.material.icons.outlined.ArrowOutward
 import androidx.compose.material.icons.outlined.CloseFullscreen
@@ -26,6 +27,7 @@ import androidx.compose.material.icons.outlined.FolderOpen
 import androidx.compose.material.icons.outlined.ManageAccounts
 import androidx.compose.material.icons.outlined.RunCircle
 import androidx.compose.material.icons.outlined.Storm
+import androidx.compose.material.icons.outlined.VideoCameraBack
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ScrollableTabRow
@@ -59,6 +61,11 @@ fun ClientScreen(paddingValues: PaddingValues) {
             title = "Manage",
             unselectedIcon = Icons.Outlined.ManageAccounts,
             selectedIcon = Icons.Filled.ManageAccounts
+        ),
+        TabIem(
+            title = "Record",
+            unselectedIcon = Icons.Outlined.VideoCameraBack,
+            selectedIcon = Icons.Filled.VideoCameraBack
         ),
         TabIem(
             title = "Compliance",
@@ -118,19 +125,14 @@ fun ClientScreen(paddingValues: PaddingValues) {
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
-        ) { index ->
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-            ) {
-                items(100) {
-                    Text(
-                        text = tabItems[index].title + it.toString(),
-                        modifier = Modifier.padding(16.dp)
-                    )
-                }
+        ) {page ->
+            when(page){
+                2-> {CameraContent()}
+                3 -> {RecordEvent()}
 
             }
+
+
         }
     }
 }

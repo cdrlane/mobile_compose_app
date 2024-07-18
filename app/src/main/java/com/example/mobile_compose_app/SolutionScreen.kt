@@ -1,6 +1,9 @@
 package com.example.mobile_compose_app
 
+import android.os.Bundle
+import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,9 +37,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.example.mobile_compose_app.composables.AssetPerformanceCard
+import com.example.mobile_compose_app.composables.DropDownItem
+import com.example.mobile_compose_app.composables.InstrumentPerformanceCard
 import com.example.mobile_compose_app.composables.InstrumentsHeader
+import com.example.mobile_compose_app.composables.insDropDownItem
+import com.example.mobile_compose_app.ui.theme.clc_navy
 
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
@@ -161,7 +169,10 @@ private val offshoreTraditionalList: List<AssetInfo> = listOf(
             192.975f
         ),
         187.00023f,
-        1870.3f
+        1870.3f,
+        riskValue = 6,
+        aum=300.3
+
     ),
     AssetInfo(
         R.drawable.small_logo,
@@ -184,7 +195,9 @@ private val offshoreTraditionalList: List<AssetInfo> = listOf(
             109.493f
         ),
         113.02211f,
-        1356.26f
+        1356.26f,
+        riskValue = 6,
+        aum=300.0
     ),
     AssetInfo(
         R.drawable.small_logo,
@@ -207,7 +220,9 @@ private val offshoreTraditionalList: List<AssetInfo> = listOf(
             392.567f
         ),
         403.00125f,
-        3627.011f
+        3627.011f,
+        riskValue = 6,
+        aum=300.0
     ),
     AssetInfo(
         R.drawable.small_logo,
@@ -230,7 +245,10 @@ private val offshoreTraditionalList: List<AssetInfo> = listOf(
             109.493f
         ),
         113.02211f,
-        1356.26f
+        1356.26f,
+        riskValue = 6,
+        aum=300.0
+
     )
 )
 private val offshoreHedgeFundList: List<AssetInfo> = listOf(
@@ -256,7 +274,9 @@ private val offshoreHedgeFundList: List<AssetInfo> = listOf(
             192.975f
         ),
         187.00023f,
-        1870.3f
+        1870.3f,
+        riskValue = 6,
+        aum=300.0
     ),
     AssetInfo(
         R.drawable.small_logo,
@@ -279,7 +299,9 @@ private val offshoreHedgeFundList: List<AssetInfo> = listOf(
             109.493f
         ),
         113.02211f,
-        1356.26f
+        1356.26f,
+        riskValue = 6,
+        aum=300.0
     ),
     AssetInfo(
         R.drawable.small_logo,
@@ -302,7 +324,9 @@ private val offshoreHedgeFundList: List<AssetInfo> = listOf(
             392.567f
         ),
         403.00125f,
-        3627.011f
+        3627.011f,
+        riskValue = 6,
+        aum=300.0
     ),
     AssetInfo(
         R.drawable.small_logo,
@@ -325,7 +349,9 @@ private val offshoreHedgeFundList: List<AssetInfo> = listOf(
             109.493f
         ),
         113.02211f,
-        1356.26f
+        1356.26f,
+        riskValue = 6,
+        aum=300.0
     )
 )
 
@@ -352,7 +378,9 @@ private val offshoreHedgeSolutionList: List<AssetInfo> = listOf(
             192.975f
         ),
         187.00023f,
-        1870.3f
+        1870.3f,
+        riskValue = 6,
+        aum=300.0
     ),
     AssetInfo(
         R.drawable.small_logo,
@@ -375,7 +403,9 @@ private val offshoreHedgeSolutionList: List<AssetInfo> = listOf(
             109.493f
         ),
         113.02211f,
-        1356.26f
+        1356.26f,
+        riskValue = 6,
+        aum=300.0
     ),
     AssetInfo(
         R.drawable.small_logo,
@@ -398,7 +428,9 @@ private val offshoreHedgeSolutionList: List<AssetInfo> = listOf(
             392.567f
         ),
         403.00125f,
-        3627.011f
+        3627.011f,
+        riskValue = 6,
+        aum=300.0
     ),
     AssetInfo(
         R.drawable.small_logo,
@@ -421,7 +453,9 @@ private val offshoreHedgeSolutionList: List<AssetInfo> = listOf(
             109.493f
         ),
         113.02211f,
-        1356.26f
+        1356.26f,
+        riskValue = 6,
+        aum=300.0
     )
 )
 
@@ -448,7 +482,9 @@ private val PrivateEquityList: List<AssetInfo> = listOf(
             192.975f
         ),
         187.00023f,
-        1870.3f
+        1870.3f,
+        riskValue = 6,
+        aum=300.0
     ),
     AssetInfo(
         R.drawable.small_logo,
@@ -471,7 +507,9 @@ private val PrivateEquityList: List<AssetInfo> = listOf(
             109.493f
         ),
         113.02211f,
-        1356.26f
+        1356.26f,
+        riskValue = 6,
+        aum=300.0
     ),
 
     )
@@ -499,7 +537,9 @@ private val localFundsList: List<AssetInfo> = listOf(
             192.975f
         ),
         187.00023f,
-        1870.3f
+        1870.3f,
+        riskValue = 6,
+        aum=300.0
     ),
     AssetInfo(
         R.drawable.corion_logo,
@@ -522,14 +562,24 @@ private val localFundsList: List<AssetInfo> = listOf(
             109.493f
         ),
         113.02211f,
-        1356.26f
+        1356.26f,
+        riskValue = 6,
+        aum=300.0
     ),
 
 )
 
+private val insDropDownList:List<DropDownItem> =
+    listOf(
+    DropDownItem("More information"),
+    DropDownItem("Latest report"),
+    DropDownItem("Transact")
+    )
+
+
 @Composable
 fun OffshoreSolutions(){
-    Column {
+    Column() {
         LazyColumn(modifier = Modifier.padding(start = 10.dp, end = 10.dp), content = {
 
             //workaround to call composable function from within another
@@ -538,21 +588,39 @@ fun OffshoreSolutions(){
 
 
             items(offshoreTraditionalList.size) { index ->
-                AssetPerformanceCard(assetInfo = offshoreTraditionalList[index])
+                val context = LocalContext.current
+                InstrumentPerformanceCard(assetInfo = offshoreTraditionalList[index],
+                                            dropdownItems=insDropDownList,
+                                            modifier=Modifier.fillMaxWidth(),
+                                             onItemClick = {
+                                                 Toast.makeText(context,
+                                                 it.text,
+                                                 Toast.LENGTH_LONG).show() }
+                                        )
             }
 
             items(count=1){_->InstrumentsHeader("Hedge Solutions")}
 
 
             items(offshoreHedgeSolutionList.size) { index ->
-                AssetPerformanceCard(assetInfo = offshoreHedgeSolutionList[index])
+                InstrumentPerformanceCard(assetInfo = offshoreTraditionalList[index],
+                    dropdownItems=insDropDownList,
+                    modifier=Modifier.fillMaxWidth(),
+                    onItemClick = { }
+                )
+
             }
 
             items(count=1){_->InstrumentsHeader("Hedge Funds")}
 
 
             items(offshoreHedgeFundList.size) { index ->
-                AssetPerformanceCard(assetInfo = offshoreHedgeFundList[index])
+                InstrumentPerformanceCard(assetInfo = offshoreTraditionalList[index],
+                    dropdownItems=insDropDownList,
+                    modifier=Modifier.fillMaxWidth(),
+                    onItemClick = { }
+                )
+
             }
         })
     }
@@ -565,7 +633,11 @@ fun LocalSolutions(){
 
         LazyColumn(modifier = Modifier.padding(start = 10.dp, end = 10.dp), content = {
             items(localFundsList.size) { index ->
-                AssetPerformanceCard(assetInfo = localFundsList[index])
+                InstrumentPerformanceCard(assetInfo = localFundsList[index],
+                    dropdownItems=insDropDownList,
+                    modifier=Modifier.fillMaxWidth(),
+                    onItemClick = { }
+                )
             }
         })
     }
@@ -578,7 +650,11 @@ fun PrivateEquitySolutions(){
 
         LazyColumn(modifier = Modifier.padding(start = 10.dp, end = 10.dp), content = {
             items(PrivateEquityList.size) { index ->
-                AssetPerformanceCard(assetInfo = PrivateEquityList[index])
+                InstrumentPerformanceCard(assetInfo = PrivateEquityList[index],
+                    dropdownItems=insDropDownList,
+                    modifier=Modifier.fillMaxWidth(),
+                    onItemClick = { }
+                )
             }
         })
     }

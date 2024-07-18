@@ -7,6 +7,8 @@ data class AssetInfo(
     val lastDayChange: List<Float>,
     val currentValue: Float,
     val total: Float,
+    var riskValue: Int,
+    var aum: Double
 )
 
 data class ClientInfo(
@@ -20,13 +22,5 @@ data class ClientId(
     val idValue:String
 )
 
-data class instrumentDropDownItem(
-     val insName:String,
-     val insDescription:String?,
-     val insManager:String?,
-     val mgrDescription: String?,
-     val insMinInvest:String?,
-     val insRiskRating:String?
 
-)
 

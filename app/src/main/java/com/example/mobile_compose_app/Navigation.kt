@@ -55,10 +55,10 @@ data class BottomNavigationItem(
     val badgeCount: Int? = null
 )
 
-data class TabIem(
+data class TabItem(
     val title:String,
-    val unselectedIcon:ImageVector,
-    val selectedIcon: ImageVector
+    val unselectedIcon:ImageVector?=null,
+    val selectedIcon: ImageVector?=null
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -229,7 +229,7 @@ fun ToolsNavHost(paddingValues: PaddingValues){
             ToolScreen(toolsNavController,paddingValues)
         }
         composable("portfolio_constructor") {
-            PortfolioContructor(toolsNavController,paddingValues)
+            ConstructorScreen(toolsNavController,paddingValues)
         }
     }
 }

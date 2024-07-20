@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,13 +37,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.mobile_compose_app.composables.DropDownItem
 import com.example.mobile_compose_app.composables.InstrumentPerformanceCard
-import com.example.mobile_compose_app.composables.InstrumentsHeader
+import com.example.mobile_compose_app.composables.ListHeader
 import com.example.mobile_compose_app.composables.insDropDownItem
 import com.example.mobile_compose_app.ui.theme.clc_navy
 
@@ -52,32 +54,32 @@ import com.example.mobile_compose_app.ui.theme.clc_navy
 fun SolutionScreen(paddingValues: PaddingValues) {
 
     val tabItems = listOf(
-        TabIem(
+        TabItem(
             title = "Local",
             unselectedIcon = Icons.Outlined.ArrowDownward,
             selectedIcon = Icons.Filled.ArrowDownward
         ),
-        TabIem(
+        TabItem(
             title = "Offshore",
             unselectedIcon = Icons.Outlined.ArrowOutward,
             selectedIcon = Icons.Filled.ArrowOutward
         ),
-        TabIem(
+        TabItem(
             title = "Private Equity",
             unselectedIcon = Icons.Outlined.CloseFullscreen,
             selectedIcon = Icons.Filled.CloseFullscreen
         ),
-        TabIem(
+        TabItem(
             title = "Life",
             unselectedIcon = Icons.Outlined.RunCircle,
             selectedIcon = Icons.Filled.RunCircle
         ),
-        TabIem(
+        TabItem(
             title = "GI",
             unselectedIcon = Icons.Outlined.Storm,
             selectedIcon = Icons.Filled.Storm
         ),
-        TabIem(
+        TabItem(
             title = "Fiduciary",
             unselectedIcon = Icons.Outlined.FolderOpen,
             selectedIcon = Icons.Filled.FolderOpen
@@ -121,8 +123,8 @@ fun SolutionScreen(paddingValues: PaddingValues) {
                     icon = {
                         Icon(
                             imageVector = if (index == selectedTabIndex) {
-                                item.selectedIcon
-                            } else item.unselectedIcon,
+                                item.selectedIcon!!
+                            } else item.unselectedIcon!!,
                             contentDescription = item.title
                         )
                     }
@@ -579,11 +581,13 @@ private val insDropDownList:List<DropDownItem> =
 
 @Composable
 fun OffshoreSolutions(){
-    Column() {
+    Column(modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.Start,
+        verticalArrangement = Arrangement.Top) {
         LazyColumn(modifier = Modifier.padding(start = 10.dp, end = 10.dp), content = {
 
             //workaround to call composable function from within another
-            items(count=1){_->InstrumentsHeader("Traditional")}
+            items(count=1){_->ListHeader("Traditional")}
 
 
 
@@ -599,7 +603,7 @@ fun OffshoreSolutions(){
                                         )
             }
 
-            items(count=1){_->InstrumentsHeader("Hedge Solutions")}
+            items(count=1){_->ListHeader("Hedge Solutions")}
 
 
             items(offshoreHedgeSolutionList.size) { index ->
@@ -611,7 +615,7 @@ fun OffshoreSolutions(){
 
             }
 
-            items(count=1){_->InstrumentsHeader("Hedge Funds")}
+            items(count=1){_->ListHeader("Hedge Funds")}
 
 
             items(offshoreHedgeFundList.size) { index ->
@@ -628,8 +632,10 @@ fun OffshoreSolutions(){
 
 @Composable
 fun LocalSolutions(){
-    Column {
-        InstrumentsHeader("Funds")
+    Column(modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.Start,
+        verticalArrangement = Arrangement.Top) {
+        ListHeader("Funds")
 
         LazyColumn(modifier = Modifier.padding(start = 10.dp, end = 10.dp), content = {
             items(localFundsList.size) { index ->
@@ -645,8 +651,10 @@ fun LocalSolutions(){
 
 @Composable
 fun PrivateEquitySolutions(){
-    Column {
-        InstrumentsHeader("Funds")
+    Column (modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.Start,
+        verticalArrangement = Arrangement.Top){
+        ListHeader("Funds")
 
         LazyColumn(modifier = Modifier.padding(start = 10.dp, end = 10.dp), content = {
             items(PrivateEquityList.size) { index ->

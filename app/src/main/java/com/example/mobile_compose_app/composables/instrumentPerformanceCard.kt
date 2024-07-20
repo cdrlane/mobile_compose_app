@@ -90,7 +90,7 @@ fun InstrumentPerformanceCard(
             }
             .wrapContentHeight()
             .fillMaxWidth()
-            .padding(start = 5.dp, end = 5.dp, bottom = 5.dp),
+            .padding(start = 2.dp, end = 2.dp, bottom = 10.dp),
         colors = CardDefaults.cardColors()
     ) {
         Row(
@@ -114,7 +114,7 @@ fun InstrumentPerformanceCard(
                         }
                     )
                 }
-                .padding(16.dp)
+                .padding(5.dp)
 
         ) {
             AssetIcon(assetInfo.iconDrawable)

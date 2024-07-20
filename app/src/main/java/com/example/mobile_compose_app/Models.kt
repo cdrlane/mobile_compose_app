@@ -11,11 +11,18 @@ data class AssetInfo(
     var aum: Double
 )
 
+
+
 data class ClientInfo(
+    val clientIcon: Int,
     val clientFirstname: String,
     val clientSurname: String,
     val clientTitle:String,
-    val clientId: List<ClientId>?
+    val clientId: List<ClientId>?,
+    val clientRiskAppetite: Int,
+    val lastDayChange: List<Float>,
+    val clientPortfolioPerformance: Float,
+    val clientPortfolioValue: Float
 )
 data class ClientId(
     val idType:String,
